@@ -6,7 +6,7 @@
 /*   By: maguimar <maguimar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:19:31 by maguimar          #+#    #+#             */
-/*   Updated: 2022/11/17 14:28:20 by maguimar         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:18:09 by maguimar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,36 @@ void static	*ft_memcpy(void *dest, const void *src, size_t n)
 		index++;
 	}
 	return (dest);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int		i;
+	char	*cs;
+
+	i = 0;
+	cs = (char *)s;
+	while (cs[i])
+	{
+		if (cs[i] == (char)c)
+			return (&((char *)cs)[i]);
+		i++;
+	}
+	if (c == '\0')
+	{
+		return (&((char *)cs)[i]);
+	}
+	return (NULL);
+}
+
+int	ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		i++;
+	}
+	return (i);
 }

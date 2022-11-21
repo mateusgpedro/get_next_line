@@ -6,7 +6,7 @@
 /*   By: maguimar <maguimar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:18:52 by maguimar          #+#    #+#             */
-/*   Updated: 2022/11/21 15:21:09 by maguimar         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:49:50 by maguimar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_next_line(int fd)
 	return(result);
 }
 
-char	*read_and_stash(int fd)
+char static	*read_and_stash(int fd)
 {
 	int		bytes_readen;
 	char	*stash;
@@ -40,7 +40,7 @@ char	*read_and_stash(int fd)
 	return (stash);
 }
 
-int	*find_newline(char *str, char c)
+int static	*find_newline(char *str, char c)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ int	*find_newline(char *str, char c)
 	return (i);
 }
 
-char *get_line(char *saved)
+char static *get_line(char *saved)
 {
 	int i;
 	int	pos;
@@ -69,7 +69,7 @@ char *get_line(char *saved)
 	return (result);
 }
 
-char *clear_found_line(char *saved)
+char static *clear_found_line(char *saved)
 {
 	int	i;
 	int	pos;

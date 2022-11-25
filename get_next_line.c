@@ -14,86 +14,72 @@
 
 char	*get_next_line(int fd)
 {
-	char static *saved;
-	char *result;
+    char *result;
+    static char *stashed;
 
-	if (BUFFER_SIZE < 1 || fd < 0 || read(fd, 0, 0) < 0)
-		return (NULL);
-	while (!ft_strchr(saved, '\n'))
-		saved = read_and_stash(fd);
-	result = get_line(saved);
-	saved = clear_found_line(saved);
-	return(result);
+    if(fd < 0 || BUFFER_SIZE <= 0)
+        return (NULL);
+    saved = read_n_stash()
 }
 
-char static	*read_and_stash(int fd)
+char *read_n_stash(int fd, char *stashed)
 {
-	int		bytes_readen;
-	char	*stash;
-	char	buf[BUFFER_SIZE + 1];
+    int bytes_readen;
+    char buf[BUFFER_SIZE + 1];
+    char *tmp;
 
-	bytes_readen = read(fd, buf, BUFFER_SIZE);
-	if(bytes_readen < 0)
-		return (NULL);
-	stash = ft_strjoin(stash, buf);
-	free(buf);
-	return (stash);
+    if (ft_strchr(stashed, '\n'))
+        return (stashed);
+    buf = calloc((BUFFER_SIZE + 1), sizeof(char));
+    bytes_readen = 42;
+    while (!ft_strchr(stashed, '\n'))
+    {
+        bytes_readen = read(fd, buf, BUFFER_SIZE);
+        if (bytes_readen < 0)
+        {
+            free (buf);
+            return (NULL);
+        }
+        buffer[bytes_readen] = '\0';
+        tmp = ft_strjoin(stashed, buf);
+        stashed = tmp;
+        free(tmp);
+    }
+    free(buf);
+    return (stashed)
 }
 
-int static	*find_newline(char *str, char c)
+char *get_line(char *stashed)
 {
-	int	i;
+    int i;
+    char *line;
 
-	i = 0;
-	while(str[i])
-		if (str[i] == c)
-			return (i);
-	return (i);
+    i = 0;
+    if (!stashed[i])
+        return (NULL);
+    while (stashed[i] && stashed[i] != '\0')
+        i++;
+    line = ft_calloc((BUFFER_SIZE + 1 + 1), sizeof(char));
+    i = 0;
+    while (stashed[i] && stashed[i] != '\0')
+        line[i++] = stashed[i];
+    if (stashed[i] == '\n')
+        line[i] = '\0';
+    return (line);
 }
 
-char static *get_line(char *saved)
+char *clear_returned_line(char *stashed)
 {
-	int i;
-	int	pos;
-	char *result;
+    int i;
+    int j;
+    char *res;
 
-	i = 0;
-	pos = find_newline(saved);
-	result = malloc(sizeof(char) * pos + 1 + 1);
-	while(i < pos)
-	{
-		result[i] = saved[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
-}
-
-char static *clear_found_line(char *saved)
-{
-	int	i;
-	int	pos;
-	char *new_saved;
-	int len = ft_strlen(*saved);
-
-	i = 0;
-	pos = find_newline(saved, '\n') + 1;
-
-	new_saved = malloc(sizeof(char) * (len - pos));
-	while (saved[pos])
-	{
-		new_saved[i] = saved[pos];
-		i++;
-		pos++;
-	}
-	new_saved[i] = '\0';
-	free(*saved);
-	return (new_saved);
-}
-
-int	main()
-{
-	int fd;
-	char *path = "teste.txt";
-	fd = open(path, O_RDONLY);
+    i = 0;
+    while (stashed[i] && stashed[i] != '\0')
+        i++;
+    if (!stashed[i])
+    {
+        free(save);
+        return (NULL);
+    }
 }

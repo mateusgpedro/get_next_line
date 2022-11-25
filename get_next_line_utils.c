@@ -28,7 +28,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new_string);
 }
 
-void static	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t	index;
 
@@ -59,20 +59,31 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	if (c == '\0')
-	{
 		return (&((char *)cs)[i]);
-	}
 	return (NULL);
 }
 
-int	ft_strlen(char *str)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	int i;
+    void *arr;
 
-	i = 0;
-	while(str[i])
-	{
-		i++;
-	}
-	return (i);
+    arr = malloc(nmemb * size);
+    if (!arr)
+    {
+        return (NULL);
+    }
+    ft_bzero(arr, (size * nmemb));
+    return (arr);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+    size_t index;
+
+    index = 0;
+    while (index < n)
+    {
+        ((unsigned char *)s)[index] = 0;
+        index++;
+    }
 }

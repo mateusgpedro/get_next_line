@@ -12,17 +12,18 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+static int ft_strlen(char *str)
 {
-    char *result;
-    static char *stashed;
+    int i;
 
-    if(fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    saved = read_n_stash()
+    i = 0;
+    while (str[i])
+        i++;
+    return (i);
 }
 
-char *read_n_stash(int fd, char *stashed)
+
+static char *read_n_stash(int fd, char *stashed)
 {
     int bytes_readen;
     char buf[BUFFER_SIZE + 1];
@@ -49,7 +50,7 @@ char *read_n_stash(int fd, char *stashed)
     return (stashed)
 }
 
-char *get_line(char *stashed)
+static char *get_line(char *stashed)
 {
     int i;
     char *line;
@@ -57,29 +58,52 @@ char *get_line(char *stashed)
     i = 0;
     if (!stashed[i])
         return (NULL);
-    while (stashed[i] && stashed[i] != '\0')
+    while (stashed[i] && stashed[i] != '\n')
         i++;
     line = ft_calloc((BUFFER_SIZE + 1 + 1), sizeof(char));
     i = 0;
-    while (stashed[i] && stashed[i] != '\0')
+    while (stashed[i] && stashed[i] != '\n')
         line[i++] = stashed[i];
     if (stashed[i] == '\n')
-        line[i] = '\0';
+        line[i] = '\n';
     return (line);
 }
 
-char *clear_returned_line(char *stashed)
+static char *clear_returned_line(char *stashed)
 {
     int i;
     int j;
     char *res;
 
     i = 0;
-    while (stashed[i] && stashed[i] != '\0')
+    while (stashed[i] && stashed[i] != '\n')
         i++;
     if (!stashed[i])
     {
         free(save);
         return (NULL);
     }
+    res = ft_calloc((ft_strlen(stashed) - i)), sizeof(char));
+    i++;
+    if (!res)
+        return (NULL);
+    while (stashed[i])
+        res[j++] = stashed[i];
+    free(stashed);
+    return (res);
+}
+
+char	*get_next_line(int fd)
+{
+    char *result;
+    static char *stashed;
+
+    if(fd < 0 || BUFFER_SIZE <= 0)
+        return (NULL);
+    stashed = read_n_stash(fd, stashed);
+    if (!stashed)
+        return (NULL);
+    result = get_line(stashed);
+    stashed = clear_returned_line(stashed);
+    return (result);
 }

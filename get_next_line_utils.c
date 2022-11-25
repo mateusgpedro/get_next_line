@@ -6,7 +6,7 @@
 /*   By: maguimar <maguimar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:19:31 by maguimar          #+#    #+#             */
-/*   Updated: 2022/11/21 15:18:09 by maguimar         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:15:33 by maguimar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,25 @@ char	*ft_strchr(const char *s, int c)
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-    void *arr;
+	void	*arr;
 
-    arr = malloc(nmemb * size);
-    if (!arr)
-    {
-        return (NULL);
-    }
-    ft_bzero(arr, (size * nmemb));
-    return (arr);
+	arr = malloc(nmemb * size);
+	if (!arr)
+	{
+		return (NULL);
+	}
+	ft_bzero(arr, (size * nmemb));
+	return (arr);
 }
 
 void	ft_bzero(void *s, size_t n)
 {
-    size_t index;
+	size_t	index;
 
-    index = 0;
-    while (index < n)
-    {
-        ((unsigned char *)s)[index] = 0;
-        index++;
-    }
+	index = 0;
+	while (index < n)
+	{
+		((unsigned char *)s)[index] = 0;
+		index++;
+	}
 }
